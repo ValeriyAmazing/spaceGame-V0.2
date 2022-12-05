@@ -1,6 +1,6 @@
 import {
     generateGalaxy
-} from "./generateGalaxy.js"
+} from "../generators/generateGalaxy.js"
 
 let galaxyMap = []
 

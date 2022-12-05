@@ -1,4 +1,4 @@
-import { galaxyMap } from "./galaxyMap.js"
+import { galaxyMap } from "./gameObjects/galaxyMap.js"
 
 const currents = {}
 
@@ -12,8 +12,8 @@ function getCurrentPlanet() {
    
 }
 
-function getCurrentCell() {
-    currents.cell = galaxyMap[0].planets[0].cells[0]
+function getCurrentCell(id) {
+    currents.cell = currents.planet.cells[id]
     
 }
 

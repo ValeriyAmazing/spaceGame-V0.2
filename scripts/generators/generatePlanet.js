@@ -1,6 +1,6 @@
 import {
     planets
-} from "./gameObjects/planets.js";
+} from "../gameObjects/planets.js";
 
 function generatePlanet(planetName, orbitNum, planetId) {
     const planet = {}

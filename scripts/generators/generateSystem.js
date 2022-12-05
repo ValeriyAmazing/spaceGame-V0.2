@@ -1,9 +1,6 @@
 import {
-    planetList
-} from "./gameObjects/planets.js";
-import {
     systemTemlates
-} from "./gameObjects/systems.js";
+} from "../gameObjects/systems.js";
 import {
     generatePlanet
 } from "./generatePlanet.js";

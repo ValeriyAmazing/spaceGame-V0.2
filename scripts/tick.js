@@ -18,10 +18,6 @@ function tick() {
                         if (planet.currentStorage[incomeType] < planet.maxStorage[incomeType]) {
                             console.log(planet.currentStorage[incomeType] += cell.building.incomes[incomeType])
                         } else planet.currentStorage[incomeType] = planet.maxStorage[incomeType]
-                        // if (planet.currentStorage[incomeType] &&planet.currentStorage[incomeType] < planet.maxStorage[incomeType]) {
-                        //     planet.currentStorage[incomeType] += cell.building.income[incomeType]
-                        // }
-
                     }
                 }
 

@@ -246,6 +246,4 @@ const buildings = {
 
 
 
-
-
 export { buildings }
