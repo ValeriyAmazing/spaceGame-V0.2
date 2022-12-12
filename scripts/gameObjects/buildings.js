@@ -1,249 +1,103 @@
 const buildings = {
     metalMiner: {
-            type: 'metalMiner',
-            name: 'Metal  Factory',
-            lvls: [{
-                    lvl: 0,
-                    cost: {
-                        metal: 400,
-                        polimer: 300,
-                        gas: 50
-                    },
-                    incomes: {
-                        metal: 10
-                    },
-                    constructTime: 10
-                },
-                {
-                    lvl: 1,
-                    cost: {
-                        metal: 700,
-                        polimer: 500,
-                        gas: 100
-                    },
-                    incomes: {
-                        metal: 20
-                    },
-                    constructTime: 30
-                },
-                {
-                    lvl: 2,
-                    cost: {
-                        metal: 1200,
-                        polimer: 800,
-                        gas: 250
-                    },
-                    incomes: {
-                        metal: 30
-                    },
-                    constructTime: 90
-                },
-                {
-                    lvl: 3,
-                    cost: {
-                        metal: 5000,
-                        polimer: 3000,
-                        gas: 500
-                    },
-                    incomes: {
-                        metal: 50
-                    },
-                    constructTime: 300
-                },
-                {
-                    lvl: 4,
-                    cost: {
-                        metal: 14000,
-                        polimer: 8000,
-                        gas: 750
-                    },
-                    incomes: {
-                        metal: 100
-                    },
-                    constructTime: 900
-                },
-                {
-                    lvl: 5,
-                    cost: {
-                        metal: 29000,
-                        polimer: 20000,
-                        gas: 1500
-                    },
-                    incomes: {
-                        metal: 150
-                    },
-                    constructTime: 1500
-                },
-            ],
-            imageSrc: './img/planets/buildings/metal-miner.png',
-            upgradeInfo: 'Metal factory allow to mine metal.',
-            buildingStatus: null,
-            buildingEndTime: null,
+        type: 'metalMiner',
+        baseCosts: {
+            metal: 150,
+            polimer: 100,
+            gas: 50
         },
+        upgrades: {
+            metal: 10
+        },
+        baseConstructTime: 10,
+        imageSrc: './img/planets/buildings/metal-miner.png',
+        cssStyle: `transform: translate(-50%, 50%);position: absolute;top: -130%;left: 50%;`,
+        buildingInfo: {
+            description: 'Metal factory allow to mine metals.',
+            title: 'Metal Miner'
+        },
+    },
     polimerMiner: {
-            type: 'polimerMiner',
-            name: 'Polimer  Factory',
-            lvls: [{
-                    lvl: 0,
-                    cost: {
-                        metal: 400,
-                        polimer: 300,
-                        gas: 50
-                    },
-                    incomes: {
-                        polimer: 10
-                    },
-                    constructTime: 10
-                },
-                {
-                    lvl: 1,
-                    cost: {
-                        metal: 700,
-                        polimer: 500,
-                        gas: 100
-                    },
-                    incomes: {
-                        polimer: 20
-                    },
-                    constructTime: 30
-                },
-                {
-                    lvl: 2,
-                    cost: {
-                        metal: 1200,
-                        polimer: 800,
-                        gas: 250
-                    },
-                    incomes: {
-                        polimer: 30
-                    },
-                    constructTime: 90
-                },
-                {
-                    lvl: 3,
-                    cost: {
-                        metal: 5000,
-                        polimer: 3000,
-                        gas: 500
-                    },
-                    incomes: {
-                        polimer: 50
-                    },
-                    constructTime: 300
-                },
-                {
-                    lvl: 4,
-                    cost: {
-                        metal: 14000,
-                        polimer: 8000,
-                        gas: 750
-                    },
-                    incomes: {
-                        polimer: 100
-                    },
-                    constructTime: 900
-                },
-                {
-                    lvl: 5,
-                    cost: {
-                        metal: 29000,
-                        polimer: 20000,
-                        gas: 1500
-                    },
-                    incomes: {
-                        polimer: 150
-                    },
-                    constructTime: 1500
-                },
-            ],
-            imageSrc: './img/planets/buildings/polimer-miner.png',
-            upgradeInfo: 'Polimer factory allow to mine polimer.',
-            buildingStatus: null,
-            buildingEndTime: null,
+        type: 'polimerMiner',
+        baseCosts: {
+            metal: 150,
+            polimer: 100,
+            gas: 50
         },
+        upgrades: {
+            polimer: 10
+        },
+        baseConstructTime: 10,
+        imageSrc: './img/planets/buildings/polimer-miner.png',
+        cssStyle: `transform: translate(-50%, 50%);position: absolute;top: -265%;left: 50%;`,
+        buildingInfo: {
+            description: 'Polimer factory allow to mine polimers.',
+            title: 'Polimer Miner'
+        },
+    },
     gasMiner: {
-            type: 'gasMiner',
-            name: 'Gas  Factory',
-            lvls: [{
-                    lvl: 0,
-                    cost: {
-                        metal: 400,
-                        polimer: 300,
-                        gas: 50
-                    },
-                    incomes: {
-                        gas: 10
-                    },
-                    constructTime: 10
-                },
-                {
-                    lvl: 1,
-                    cost: {
-                        metal: 700,
-                        polimer: 500,
-                        gas: 100
-                    },
-                    incomes: {
-                        gas: 20
-                    },
-                    constructTime: 30
-                },
-                {
-                    lvl: 2,
-                    cost: {
-                        metal: 1200,
-                        polimer: 800,
-                        gas: 250
-                    },
-                    incomes: {
-                        gas: 30
-                    },
-                    constructTime: 90
-                },
-                {
-                    lvl: 3,
-                    cost: {
-                        metal: 5000,
-                        polimer: 3000,
-                        gas: 500
-                    },
-                    incomes: {
-                        gas: 50
-                    },
-                    constructTime: 300
-                },
-                {
-                    lvl: 4,
-                    cost: {
-                        metal: 14000,
-                        polimer: 8000,
-                        gas: 750
-                    },
-                    incomes: {
-                        gas: 100
-                    },
-                    constructTime: 900
-                },
-                {
-                    lvl: 5,
-                    cost: {
-                        metal: 29000,
-                        polimer: 20000,
-                        gas: 1500
-                    },
-                    incomes: {
-                        gas: 150
-                    },
-                    constructTime: 1500
-                },
-            ],
-            imageSrc: './img/planets/buildings/gas-miner.png',
-            upgradeInfo: 'Gas factory allow to mine gas.',
-            buildingStatus: null,
-            buildingEndTime: null,
+        type: 'gasMiner',
+        baseCosts: {
+            metal: 150,
+            polimer: 100,
+            gas: 50
         },
-    }
+        upgrades: {
+            gas: 10
+        },
+        baseConstructTime: 10,
+        imageSrc: './img/planets/buildings/gas-miner.png',
+        cssStyle: `transform: translate(-50%, 50%);position: absolute;top: -175%;left: 50%;`,
+        buildingInfo: {
+            description: 'Gas factory allow to mine gas.',
+            title: 'Gas Miner'
+        },
+    },
+
+    laboratory: {
+        type: 'groundBuilding',
+        baseCosts: {
+            metal: 150,
+            polimer: 150,
+            gas: 150
+        },
+        upgrades: {
+            sp: 1
+        },
+        baseConstructTime: 25,
+        imageSrc: './img/planets/buildings/laboratory.png',
+        cssStyle: `transform: translate(-50%, 50%);position: absolute;top: -260%;left: 50%;`,
+        buildingInfo: {
+            description: 'Laboratory allow to produce science points.',
+            title: 'Laboratory'
+        },
+    },
+        storage: {
+            type: 'groundBuilding',
+            baseCosts: {
+                metal: 120,
+                polimer: 120,
+                gas: 120
+            },
+            upgrades: {
+                
+                metal: 2000,
+                polimer: 2000,
+                gas:2000,
+                
+            },
+            baseConstructTime: 20,
+            imageSrc: './img/planets/buildings/storage.png',
+            cssStyle: `transform: translate(-50%, 50%);position: absolute;top: -170%;left: 50%;`,
+            buildingInfo: {
+                description: 'Storage.',
+                title: 'Storage'
+            },
+        },
+}
 
 
 
-export { buildings }
+export {
+    buildings
+}

@@ -21,7 +21,7 @@ function generatePlanet(planetName, orbitNum, planetId) {
         gas: 1000,
         polimer: 1000
     }
-    planet.incomes = {
+    planet.upgrades = {
         metal: 0,
         gas: 0,
         polimer: 0

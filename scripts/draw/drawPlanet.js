@@ -6,54 +6,92 @@ import {
     takeCost
 } from "../construct.js"
 import {
+    buildings
+} from "../gameObjects/buildings.js"
+import {
     currents,
-    getCurrentCell
+    setCurrentCell
 } from "../getCurrentItems.js"
 import {
     drawBuilding
 } from "./drawBuilding.js"
+import {
+    drawBuildingMenuItem
+} from "./drawBuildMenu.js"
+import { timerStart } from '../timer.js';
 
 function drawPlanet() {
-    const storage = create('storage')
-    const planetField = create('planet')
-    const space = create('space')
-    const gas = create('gas')
-    const poly = create('poly')
-    const metal = create('metal')
-    const ground = create('ground')
+    const planetMenuItems = createElWithClass('planet-menu')
+    const planetMenuWrapper = createElWithClass('planet-menu-wrapper')
+    // const planetMenuCloseBtn = create('planet-menu-close-btn')
+    const storage = createElWithClass('storage')
+    const storageMetal = createElWithClass('item-cost-metal')
+    const storagePolimer = createElWithClass('item-cost-polimer')
+    const storageGas = createElWithClass('item-cost-gas')
+    const planetField = createElWithClass('planet')
+    const space = createElWithClass('space')
+    const gas = createElWithClass('gas')
+    const poly = createElWithClass('poly')
+    const metal = createElWithClass('metal')
+    const ground = createElWithClass('ground')
 
     container.innerHTML = ''
 
-    storage.style.cssText = `
-        height: 20px;
-        width: 1200px;
-        background-color: white;
-        border-radius: 10px;
-        border: 1px solid black;
-        text-align: center;
-        vertical-align: center;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-bottom: 15px;`
-    
+    // storage.style.cssText = `
+    //     height: 20px;
+    //     width: 1200px;
+    //     background-color: white;
+    //     border-radius: 10px;
+    //     border: 1px solid black;
+    //     text-align: center;
+    //     vertical-align: center;
+    //     display: flex;А
+    //     justify-content: center;
+    //     align-items: center;
+    //     margin-bottom: 15px;`
+
     planetField.addEventListener('click', (e) => {
-        const target = e.target.closest('.cell')
+        if (e.target.closest('.cell')) {
+            const target = e.target.closest('.cell')
+            planetMenuItems.innerHTML = ''
+            setCurrentCell(target.id)
+            planetMenuWrapper.classList.add('planet-menu-active')
+            if (!currents.cell.building) {
+                for (const building in buildings) {
 
-        getCurrentCell(target.id)
+                    if (buildings[building].type == currents.cell.allowedBuildingType) {
+                        const menuItem = drawBuildingMenuItem(building, 1, 'Build')
+                        planetMenuItems.append(menuItem)
+                    }
 
-        if (!currents.cell.building && takeCost('metalMiner', 0, currents.planet.currentStorage)) {
-            currents.cell.building = generateNewBuilding('metalMiner')
+                }
+            }
+            if (currents.cell.building && currents.cell.building.constructEnd === null) {
+                const menuItem = drawBuildingMenuItem(currents.cell.building.key, currents.cell.building.lvl + 1, 'Upgrade')
+                planetMenuItems.append(menuItem)
+            }
         }
+        // else planetMenuWrapper.classList.remove('planet-menu-active')
 
-        drawPlanet()
     })
 
-    function create(_class) {
-        const el = document.createElement('div')
-        el.classList.add(_class)
-        return el
-    }
+function showStorage() {
+    storageMetal.innerHTML = `${currents.planet.currentStorage.metal}/${currents.planet.maxStorage.metal}`
+    storagePolimer.innerHTML = `${currents.planet.currentStorage.polimer}/${currents.planet.maxStorage.polimer}`
+    storageGas.innerHTML = `${currents.planet.currentStorage.gas}/${currents.planet.maxStorage.gas}`
+
+    requestAnimationFrame(showStorage)
+}
+
+    planetField.append(planetMenuWrapper, space, gas, poly, metal, ground)
+    planetMenuWrapper.append(planetMenuItems)
+    container.append(storage, planetField)
+    storage.append(storageMetal, storagePolimer, storageGas)
+    drawCells(gas, poly, metal, space, ground)
+    showStorage()
+}
+
+function drawCells(gasDOMElement, polyDOMElement, metalDOMElement, spaceDOMElement, groundDOMElement) {
 
     for (const _cell of currents.planet.cells) {
         const cell = document.createElement('div')
@@ -63,46 +101,49 @@ function drawPlanet() {
         cell.classList.add("cell")
         switch (_cell.allowedBuildingType) {
             case 'gasMiner':
-                gas.append(cell)
+                gasDOMElement.append(cell)
                 break;
             case 'polimerMiner':
-                poly.append(cell)
+                polyDOMElement.append(cell)
                 break;
             case 'metalMiner':
-                metal.append(cell)
+                metalDOMElement.append(cell)
                 break;
-            case 'spaceBuildings':
-                space.append(cell)
+            case 'spaceBuilding':
+                spaceDOMElement.append(cell)
                 break;
-            case 'groundBuildings':
-                ground.append(cell)
+            case 'groundBuilding':
+                groundDOMElement.append(cell)
                 break;
             default:
                 console.log('something wrong!');
         }
         if (_cell.building) {
-            const building = drawBuilding(_cell.building.type)
-            const buildingInfo = document.createElement('div')
-            buildingInfo.style.cssText = `transform: translate(-50%, 50%);position: relative;top: -75%;left: 50%;background:white;min-width:35px;min-heigth:25px;border-radius:10px;text-align:center;`
-            buildingInfo.innerText = `${_cell.building.lvl+1}`
-            cell.append(building)
+            const building = drawBuilding(_cell.building.key)
+            const buildingInfo = createElWithClass('building-lvl')
+            buildingInfo.innerText = `${_cell.building.lvl}`
             cell.append(buildingInfo)
+            cell.append(building)
+            if (_cell.building.constructEnd != null) {
+                timerStart(_cell.building.constructEnd, buildingInfo, drawPlanet)
+                
+            }
         }
     }
+}
 
-    planetField.append(space, gas, poly, metal, ground)
-    container.append(storage, planetField)
 
-    showStorage()
 
-    function showStorage() {
-        storage.innerHTML = `metal: ${currents.planet.currentStorage.metal}     gas: ${currents.planet.currentStorage.gas}     polimer:${currents.planet.currentStorage.polimer}`
-        requestAnimationFrame(showStorage)
+function createElWithClass(_class) {
+    const el = document.createElement('div')
+    if (_class) {
+        el.classList.add(_class)
     }
-
+    return el
 }
 
 
 export {
-    drawPlanet
+    drawPlanet,
+    createElWithClass
 }

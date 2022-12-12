@@ -2,44 +2,60 @@ import {
     buildings
 } from "./gameObjects/buildings.js";
 
-function generateNewBuilding(buildingType) {
+function generateNewBuilding(buildingsKey, lvl) {
     const building = {}
-
-    building.type = buildingType
-    building.imageSrc = buildings[buildingType].imageSrc
-    building.lvl = buildings[buildingType].lvls[0].lvl
-    building.constructTime = buildings[buildingType].lvls[0].constructTime
-    building.constructEnd = Date.now() + building.constructTime * 1000
+    building.key = buildingsKey
+    building.type = buildings[buildingsKey].type
+    building.imageSrc = buildings[buildingsKey].imageSrc
+    building.constructEnd = Date.now() + buildings[buildingsKey].baseConstructTime *  1000 *lvl**2
     building.constructStatus = `construct`
-
+    building.lvl = lvl
     return building
 }
 
+// function calculateTheCost(buildingsKeyBaseCosts, lvl) {
+//     const costs = {}
+//     for (const [key, value] of Object.entries(buildingsKeyBaseCosts)) {
+//         costs[key] = value * Math.pow(lvl, 3)
+//     }
 
-function takeCost(buildingType, buildingLvl, planetStorage) {
+//     return costs
+// }
 
-    for (const costType in buildings[buildingType].lvls[buildingLvl].cost) {
-        if (planetStorage[costType] < buildings[buildingType].lvls[buildingLvl].cost[costType]) {
-            return alert("Not Enought Resourses")
-        }
+function calculateTheCost(buildingsKeyBaseCosts, lvl) {
+    const costs = {}
+    for (const [key, value] of Object.entries(buildingsKeyBaseCosts)) {
+        costs[key] = value * Math.pow(lvl, 3)
     }
 
-    for (const costType in buildings[buildingType].lvls[buildingLvl].cost) {
-        planetStorage[costType] -= buildings[buildingType].lvls[buildingLvl].cost[costType]
+    return costs
+}
+
+function takeCost(costs, planetStorage) {
+
+    for (const [key, value] of Object.entries(costs)) {
+       if (planetStorage[key] < value)
+       {
+           return false
+       }
+        
     }
+    for (const [key, value] of Object.entries(costs)) {
+        planetStorage[key] -= value
+    }
+
 
     return true
 }
 
-function getNewIncomes(building, lvl) {
-    const incomes = {}
+function calculateUpgrades(buildingsKeyupgrades, lvl) {
+    const upgrades = {}
 
-    for (const income in buildings[building.type].lvls[lvl].incomes) {
-        incomes[income] = buildings[building.type].lvls[lvl].incomes[[income]]
+    for (const [key, value] of Object.entries(buildingsKeyupgrades)) {
+        upgrades[key] = value * Math.pow(lvl, 2)
     }
-    building.constructStatus = `done`
-
-    return incomes
+    return upgrades
 }
 
-export { generateNewBuilding, takeCost, getNewIncomes }
+
+export { generateNewBuilding, calculateTheCost, takeCost, calculateUpgrades }
