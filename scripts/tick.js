@@ -24,9 +24,8 @@ function tick() {
                         if (cell.building.key === 'storage') {
                             console.log(cell.building.upgrades);
                             for (const [key, value] of Object.entries(cell.building.upgrades)) {
-                                planet.maxStorage[key] = value
+                                planet.maxStorage[key] += value
                             }
-                            cell.building.constructEnd = null
                             cell.building.upgrades = null
                         } else {
                             cell.building.incomes = cell.building.upgrades

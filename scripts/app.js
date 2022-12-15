@@ -1,3 +1,4 @@
+import { errorWraper } from "./draw/drawErrorPop.js"
 import { drawPlanet } from "./draw/drawPlanet.js"
 import { buildings } from "./gameObjects/buildings.js"
 import {

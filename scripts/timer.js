@@ -4,6 +4,7 @@
      function KeepUdateTimer() {
          const now = Date.now()
          if (now > endOfprocess) {
+            //  element.innerHTML = ''
              callback()
              return
          }

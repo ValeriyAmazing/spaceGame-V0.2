@@ -17,11 +17,14 @@ import {
 import {
     timeFormatted
 } from '../timer.js';
+import {
+    planetMenuItems,
+    planetMenuWrapper
+} from "./drawPlanetMenu.js";
 
 function drawBuildingMenuItem(buildingKey, lvl, buttonText) {
     const cost = calculateTheCost(buildings[buildingKey].baseCosts, lvl)
 
-createElWithClass
     const menuItem = createElWithClass('menu-item')
 
     const itemTitle = createElWithClass('item-title')
@@ -49,78 +52,79 @@ createElWithClass
     const itemBuildTime = createElWithClass()
     itemBuildTime.innerHTML = `Building time: ${timeFormatted(buildings[buildingKey].baseConstructTime*1000*lvl**2)}`
 
-    const itemInfoBtn = document.createElement('button')
-    itemInfoBtn.classList.add('item-info-btn')
-    itemInfoBtn.innerText = 'Building info'
-    itemInfoBtn.addEventListener('click', () => {
-        infoDescription.classList.toggle('hide')
-    })
+
 
     const itemButton = document.createElement('button')
     itemButton.classList.add('item-button')
     itemButton.innerText = buttonText
     itemButton.addEventListener('click', () => {
 
-
-
         if (takeCost(cost, currents.planet.currentStorage)) {
             currents.cell.building = generateNewBuilding(buildingKey, lvl)
         }
-
+        planetMenuWrapper.classList.remove('planet-menu-active')
+        planetMenuItems.innerHTML = ''
         drawPlanet()
-
     })
 
-    const infoDescription = createElWithClass('info-description')
-    infoDescription.classList.add('hide')
-    for (let i = 1; i < 26; i++) {
-        const infoWrapper = createElWithClass('info-wrapper')
-        const infoLvl = createElWithClass('info-lvl')
-        infoLvl.innerText = `LVL: ${i}`
-        infoDescription.append(infoWrapper)
-        infoWrapper.append(infoLvl)
-        const infoIncomeWrap = createElWithClass('info-income-wrap')
-        infoWrapper.append(infoIncomeWrap)
+    // const itemInfoBtn = document.createElement('button')
+    // itemInfoBtn.classList.add('item-info-btn')
+    // itemInfoBtn.innerText = 'Building info'
+    // itemInfoBtn.addEventListener('click', () => {
+    //     infoDescription.classList.toggle('hide')
+    // })
 
-        const upgrades = calculateUpgrades(buildings[buildingKey].upgrades, i)
-        for (const income in upgrades) {
-            const infoIncome = createElWithClass('')
+    // const infoDescription = createElWithClass('info-description')
+    // infoDescription.classList.add('hide')
+    // for (let i = 1; i < 26; i++) {
+    //     const infoWrapper = createElWithClass('info-wrapper')
+    //     const infoLvl = createElWithClass('info-lvl')
+    //     infoLvl.innerText = `LVL: ${i}`
+    //     infoDescription.append(infoWrapper)
+    //     infoWrapper.append(infoLvl)
+    //     const infoIncomeWrap = createElWithClass('info-income-wrap')
+    //     infoWrapper.append(infoIncomeWrap)
 
-
-            infoIncomeWrap.append(infoIncome)
-            switch (income) {
-                case 'metal':
-
-                    infoIncome.innerText = `${upgrades[income]}/s`
-                    infoIncome.classList.add('item-cost-metal')
-                    break;
-                case 'polimer':
-                    infoIncome.classList.add('item-cost-polimer')
-                    infoIncome.innerText = `${upgrades[income]}/s`
-
-                    break;
-                case 'gas':
-                    infoIncome.innerText = `${upgrades[income]}/s`
-                    infoIncome.classList.add('item-cost-gas')
-                    break;
-                case 'sp':
-
-                    break;
-
-                default:
-                    break;
-            }
-            infoIncome.classList.add('info-income')
-        }
-
-        infoDescription.append(infoWrapper)
-    }
+    //     const upgrades = calculateUpgrades(buildings[buildingKey].upgrades, i)
+    //     for (const income in upgrades) {
+    //         const infoIncome = createElWithClass('')
 
 
-    menuItem.append(itemTitle, itemImg, itemDiscription, itemButton, itemInfoBtn)
+    //         infoIncomeWrap.append(infoIncome)
+    //         switch (income) {
+    //             case 'metal':
+
+    //                 infoIncome.innerText = `${upgrades[income]}/s`
+    //                 infoIncome.classList.add('item-cost-metal')
+    //                 break;
+    //             case 'polimer':
+    //                 infoIncome.classList.add('item-cost-polimer')
+    //                 infoIncome.innerText = `${upgrades[income]}/s`
+
+    //                 break;
+    //             case 'gas':
+    //                 infoIncome.innerText = `${upgrades[income]}/s`
+    //                 infoIncome.classList.add('item-cost-gas')
+    //                 break;
+    //             case 'sp':
+
+    //                 break;
+
+    //             default:
+    //                 break;
+    //         }
+    //         infoIncome.classList.add('info-income')
+    //     }
+
+    //     infoDescription.append(infoWrapper)
+    // }
+    // menuItem.append(infoDescription)
+    // menuItem.append(itemInfoBtn)
+
+    menuItem.append(itemTitle, itemImg, itemDiscription, itemButton)
     itemDetais.append(itemCostMetal, itemCostPolimer, itemCostGas, itemBuildTime)
     itemDiscription.append(itemDetais)
-    menuItem.append(infoDescription)
+
     return menuItem
 }
 

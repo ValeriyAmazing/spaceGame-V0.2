@@ -1,3 +1,4 @@
+import { showMessageError } from "./draw/drawErrorPop.js";
 import {
     buildings
 } from "./gameObjects/buildings.js";
@@ -36,6 +37,7 @@ function takeCost(costs, planetStorage) {
     for (const [key, value] of Object.entries(costs)) {
        if (planetStorage[key] < value)
        {
+           showMessageError('Not enought resosurses')
            return false
        }
         

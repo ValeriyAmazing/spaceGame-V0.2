@@ -9,7 +9,7 @@ const buildings = {
         upgrades: {
             metal: 10
         },
-        baseConstructTime: 10,
+        baseConstructTime: 1,
         imageSrc: './img/planets/buildings/metal-miner.png',
         cssStyle: `transform: translate(-50%, 50%);position: absolute;top: -130%;left: 50%;`,
         buildingInfo: {
